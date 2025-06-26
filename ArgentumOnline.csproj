@@ -5,6 +5,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\Core\AutoLoads\" />
-    <Folder Include="src\Core\Extensions\" />
   </ItemGroup>
 </Project>
