@@ -3,4 +3,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\Core\AutoLoads\" />
+    <Folder Include="src\Core\Extensions\" />
+  </ItemGroup>
 </Project>

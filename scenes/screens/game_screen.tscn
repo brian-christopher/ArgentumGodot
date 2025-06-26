@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c72vpe5xpnd1"]
 
-[ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/GameScreen.cs" id="1_v3r1a"]
+[ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
 
 [node name="GameScreen" type="Node"]
 script = ExtResource("1_v3r1a")

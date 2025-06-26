@@ -1,4 +1,5 @@
 using ArgentumOnline.Core;
+using ArgentumOnline.Net;
 using Godot;
 
 namespace ArgentumOnline;
