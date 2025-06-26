@@ -63,4 +63,82 @@ public partial class GameScreen : Node
     {
         
     }
+
+    [Handler(ServerPacketId.PlayMIDI)]
+    private void HandlePlayMidi(PlayMidiCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.AreaChanged)]
+    private void HandleAreaChanged(AreaChangedCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.ObjectCreate)]
+    private void HandleObjectCreate(ObjectCreateCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.BlockPosition)]
+    private void HandleBlockPosition(BlockPositionCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.CharacterCreate)]
+    private void HandleCharacterCreate(CharacterCreateCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.SetInvisible)]
+    private void HandleSetInvisible(SetInvisibleCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.CreateFX)]
+    private void HandleCreateFx(CreateFxCommand command)
+    {
+        
+    }
+    
+    [Handler(ServerPacketId.UpdateStrenghtAndDexterity)]
+    private void HandleUpdateStrengthAndDexterityCommand(UpdateStrengthAndDexterityCommand command)
+    {}
+
+    [Handler(ServerPacketId.UserCharIndexInServer)]
+    private void HandleUserCharIndexInServer(UserCharIndexInServerCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.GuildChat)]
+    private void HandleGuildChat(GuildChatCommand command)
+    {
+        
+    }
+    
+    [Handler(ServerPacketId.LevelUp)]   
+    private void HandleLevelUp(LevelUpCommand command)
+    {}
+    
+    [Handler(ServerPacketId.SendSkills)]
+    private void HandleSendSkills(SendSkillsCommand command)
+    {}
+
+    [Handler(ServerPacketId.UpdateUserStats)]
+    private void HandleUpdateUserStats(UpdateUserStatsCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.UpdateHungerAndThirst)]
+    private void HandleUpdateHungerAndThirstCommand(UpdateHungerAndThirstCommand command)
+    {
+        
+    }
 }
