@@ -127,6 +127,12 @@ public partial class GameScreen : Node
         MapContainer.AddCharacter(character);
     }
 
+    [Handler(ServerPacketId.CharacterRemove)]
+    private void HandleCharacterRemove(CharacterRemoveCommand command)
+    {
+        MapContainer.RemoveCharacter(command.CharIndex);
+    }
+
     [Handler(ServerPacketId.SetInvisible)]
     private void HandleSetInvisible(SetInvisibleCommand command)
     {
