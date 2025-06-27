@@ -136,7 +136,12 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.SetInvisible)]
     private void HandleSetInvisible(SetInvisibleCommand command)
     {
+        CharacterController character = MapContainer.GetCharacter(command.CharIndex);
         
+        if (character != null)
+        {
+            character.CharacterInvisible = !command.Invisible;
+        }
     }
 
     [Handler(ServerPacketId.CreateFX)]
