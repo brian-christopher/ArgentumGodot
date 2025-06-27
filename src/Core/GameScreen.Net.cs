@@ -87,7 +87,7 @@ public partial class GameScreen : Node
     }
 
     [Handler(ServerPacketId.ErrorMsg)]
-    private void HandleErrorMessage()
+    private void HandleErrorMessage(ErrorMessageCommand command)
     {
         
     }
