@@ -19,7 +19,7 @@ internal static class GameAssets
 {
     public static GrhData[] GrhDataList { get; private set; }
 
-    static GameAssets()
+    public static void Load()
     {
         LoadGrhData();
     }
@@ -46,7 +46,7 @@ internal static class GameAssets
         while (stream.Position < stream.Length)
         {
             int grhId = reader.ReadInt32();
-            int frameCount = reader.ReadInt32();
+            int frameCount = reader.ReadInt16();
             
             GrhData grhData = new GrhData();
             
