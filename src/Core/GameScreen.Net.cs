@@ -1,4 +1,6 @@
 using ArgentumOnline.Core.AutoLoads;
+using ArgentumOnline.Core.Types;
+using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
 using ArgentumOnline.Net.Commands;
 using Godot;
@@ -61,7 +63,7 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.ChangeMap)]
     private void HandleChangeMap(ChangeMapCommand command)
     {
-        
+        MapContainer.Load(command.Id);
     }
 
     [Handler(ServerPacketId.PlayMIDI)]
@@ -82,6 +84,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.ErrorMsg)]
+    private void HandleErrorMessage()
+    {
+        
+    }
+
     [Handler(ServerPacketId.BlockPosition)]
     private void HandleBlockPosition(BlockPositionCommand command)
     {
@@ -91,7 +99,24 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.CharacterCreate)]
     private void HandleCharacterCreate(CharacterCreateCommand command)
     {
+        CharacterController character = ResourceLoader
+            .Load<PackedScene>("res://scenes/entities/character/character.tscn")
+            .Instantiate<CharacterController>();
         
+        character.CharacterName = command.Name;
+        character.CharacterNameColor = Colors.White;
+        character.CharacterId = command.CharIndex;
+        character.Position = new Vector2((command.X - 1) * 32, (command.Y - 1) * 32) + new Vector2(16, 32);
+        character.GridPosition = new Vector2I(command.X, command.Y);
+        
+        character.Renderer.Body = command.Body;
+        character.Renderer.Head = command.Head;
+        character.Renderer.Helmet = command.Helmet;
+        character.Renderer.Weapon = command.Weapon;
+        character.Renderer.Shield = command.Shield;
+        character.Renderer.Heading = (Heading)command.Heading;
+        
+        MapContainer.AddCharacter(character);
     }
 
     [Handler(ServerPacketId.SetInvisible)]
