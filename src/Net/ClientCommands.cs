@@ -1,3 +1,6 @@
+using ArgentumOnline.Core.AutoLoads;
+using ArgentumOnline.Core.Types;
+
 namespace ArgentumOnline.Net;
 
 public static class ClientCommands
@@ -50,5 +53,25 @@ public static class ClientCommands
     public static void SendThrowDice(this Core.AutoLoads.NetworkClient client)
     {
         SendOnePacket(client, ClientPacketId.ThrowDices);
+    }
+    
+    public static void SendWalk(this NetworkClient client, Heading heading)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.Walk)
+            .WriteByte((byte)heading)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendChangeHeading(this NetworkClient client, Heading heading)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.ChangeHeading)
+            .WriteByte((byte)heading)
+            .Build();
+        
+        client.Send(data);
     }
 }
