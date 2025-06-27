@@ -26,7 +26,7 @@ internal static class GameAssets
 
     public static Texture2D GetTexture(int id)
     {
-        return ResourceLoader.Load<Texture2D>($"res//assets/textures/{id}.png");
+        return ResourceLoader.Load<Texture2D>($"res://assets/textures/{id}.png");
     }
 
     private static void LoadGrhData()
