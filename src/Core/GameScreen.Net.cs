@@ -142,7 +142,12 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {
+        CharacterController character = MapContainer.GetCharacter(command.CharIndex);
         
+        if (character != null)
+        {
+            character.Effect.PlayEffect(command.Fx, command.FxLoops);
+        }
     }
     
     [Handler(ServerPacketId.UpdateStrenghtAndDexterity)]
