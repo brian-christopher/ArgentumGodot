@@ -153,7 +153,7 @@ public partial class MapContainer : Node2D
 
     private Node2D GetLayer(string layerName)
     {
-        Node2D node = _viewContainer
+        Node2D node = _currentView
             .GetChildren()
             .OfType<Node2D>()
             .FirstOrDefault(node => node.Name == layerName);
