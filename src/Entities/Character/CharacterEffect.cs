@@ -31,7 +31,7 @@ public partial class CharacterEffect : AnimatedSprite2D
         if (EffectId > 0)
         {
             SpriteFrames = ResourceLoader
-                .Load<SpriteFrames>($"res://resources/fxs/fx_{EffectId}.tres");
+                .Load<SpriteFrames>($"res://resources/character/fxs/fx_{EffectId}.tres");
 
             float height = SpriteFrames
                 .GetFrameTexture("default", 0)
