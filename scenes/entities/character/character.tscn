@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://cks67q0qxflln"]
+
+[ext_resource type="Script" uid="uid://bnew1evmyeivg" path="res://src/Entities/Character/CharacterController.cs" id="1_qb84i"]
+[ext_resource type="Script" uid="uid://dkwwoa64014uf" path="res://src/Entities/Character/CharacterRenderer.cs" id="2_q5jmq"]
+[ext_resource type="Script" uid="uid://cayods2laccd0" path="res://src/Entities/Character/CharacterEffect.cs" id="3_ajoqi"]
+
+[node name="Character" type="Node2D" node_paths=PackedStringArray("Renderer", "Effect", "DialogueLabel", "DialogueClearTimer", "NameLabel")]
+script = ExtResource("1_qb84i")
+Renderer = NodePath("Renderer")
+Effect = NodePath("Effect")
+DialogueLabel = NodePath("Dialog")
+DialogueClearTimer = NodePath("DialogClearTimer")
+NameLabel = NodePath("Name")
+
+[node name="Renderer" type="Node2D" parent="." node_paths=PackedStringArray("_helmetAnimator", "_headAnimator", "_bodyAnimator", "_weaponAnimator", "_shieldAnimator")]
+script = ExtResource("2_q5jmq")
+_helmetAnimator = NodePath("Helmet")
+_headAnimator = NodePath("Head")
+_bodyAnimator = NodePath("Body")
+_weaponAnimator = NodePath("Weapon")
+_shieldAnimator = NodePath("Shield")
+
+[node name="Body" type="AnimatedSprite2D" parent="Renderer"]
+
+[node name="Head" type="AnimatedSprite2D" parent="Renderer"]
+position = Vector2(0, -5)
+
+[node name="Helmet" type="AnimatedSprite2D" parent="Renderer"]
+position = Vector2(0, -20)
+
+[node name="Weapon" type="AnimatedSprite2D" parent="Renderer"]
+
+[node name="Shield" type="AnimatedSprite2D" parent="Renderer"]
+position = Vector2(0, -4)
+
+[node name="Effect" type="AnimatedSprite2D" parent="."]
+script = ExtResource("3_ajoqi")
+
+[node name="Name" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_right = 120.0
+offset_bottom = 49.0
+grow_horizontal = 2
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Dialog" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -193.0
+offset_top = -261.0
+offset_right = 194.0
+offset_bottom = -53.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+vertical_alignment = 2
+autowrap_mode = 2
+clip_text = true
+
+[node name="DialogClearTimer" type="Timer" parent="."]
