@@ -1,5 +1,6 @@
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Entities;
+using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
 using Godot;
 
@@ -26,5 +27,20 @@ public partial class GameScreen : Node
         NetworkClient.Instance.OnReceive += InstanceOnOnReceive;
         
         NetworkClient.Instance.ConnectToHost("127.0.0.1", 7666);
+    }
+
+    public override void _Process(double delta)
+    {
+        UpdateCameraPosition((float)delta);
+    }
+
+    private void UpdateCameraPosition(float delta)
+    {
+        CharacterController mainCharacter = MapContainer.GetCharacter(_mainCharacterId);
+        
+        if (mainCharacter != null && MainCamera != null)
+        {
+            MainCamera.Position = mainCharacter.Position;
+        }
     }
 }

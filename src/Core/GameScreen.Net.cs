@@ -139,7 +139,7 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.UserCharIndexInServer)]
     private void HandleUserCharIndexInServer(UserCharIndexInServerCommand command)
     {
-        
+        _mainCharacterId = command.CharIndex;
     }
 
     [Handler(ServerPacketId.GuildChat)]
