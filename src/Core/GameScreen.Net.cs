@@ -81,7 +81,8 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.ObjectCreate)]
     private void HandleObjectCreate(ObjectCreateCommand command)
     {
-        
+        MapContainer.RemoveOjbect(command.X, command.Y);
+        MapContainer.AddObject(command.GrhIndex, command.X, command.Y);
     }
 
     [Handler(ServerPacketId.ErrorMsg)]
