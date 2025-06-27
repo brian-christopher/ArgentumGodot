@@ -92,6 +92,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.ConsoleMsg)]
+    private void HandleConsoleMessage(ConsoleMessageCommand command)
+    {
+        
+    }
+
     [Handler(ServerPacketId.BlockPosition)]
     private void HandleBlockPosition(BlockPositionCommand command)
     {
