@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://c72vpe5xpnd1"]
+[gd_scene load_steps=3 format=3 uid="uid://c72vpe5xpnd1"]
 
 [ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
+[ext_resource type="Script" uid="uid://bdmaaxo3gc6is" path="res://src/Entities/MapContainer.cs" id="2_beu7v"]
 
-[node name="GameScreen" type="Node"]
+[node name="GameScreen" type="Node" node_paths=PackedStringArray("MapContainer", "MainCamera")]
 script = ExtResource("1_v3r1a")
+MapContainer = NodePath("MapContainer")
+MainCamera = NodePath("MainCamera")
+
+[node name="MapContainer" type="Node2D" parent="."]
+script = ExtResource("2_beu7v")
+
+[node name="MainCamera" type="Camera2D" parent="."]
