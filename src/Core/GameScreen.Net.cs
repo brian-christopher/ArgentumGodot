@@ -1,4 +1,5 @@
 using ArgentumOnline.Core.AutoLoads;
+using ArgentumOnline.Core.Extensions;
 using ArgentumOnline.Core.Types;
 using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
@@ -94,7 +95,13 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.BlockPosition)]
     private void HandleBlockPosition(BlockPositionCommand command)
     {
+        TileState tile = MapContainer.GetTile(command.X - 1, command.Y - 1);
         
+        tile = command.Blocked 
+            ? tile.Block() 
+            : tile.Unblock();
+
+        MapContainer.SetTile(command.X - 1, command.Y - 1, tile);
     }
 
     [Handler(ServerPacketId.CharacterCreate)]
