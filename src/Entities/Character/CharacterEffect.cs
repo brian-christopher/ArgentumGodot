@@ -43,7 +43,7 @@ public partial class CharacterEffect : AnimatedSprite2D
             
             Position = Position with
             {
-                Y = height / 2.0f + offset
+                Y = -height / 2.0f + offset
             };
             
             Show();
