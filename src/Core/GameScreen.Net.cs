@@ -70,7 +70,12 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.PlayMIDI)]
     private void HandlePlayMidi(PlayMidiCommand command)
     {
-        
+    }
+
+    [Handler(ServerPacketId.PlayWave)]
+    private void HandlePlayWave(PlayWaveCommand command)
+    {
+        AudioManager.Instance.PlayAudio(command.WaveId);
     }
 
     [Handler(ServerPacketId.AreaChanged)]
