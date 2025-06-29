@@ -190,6 +190,16 @@ public partial class GameScreen : Node
             character.Effect.StopEffect();
         }
 
+        //if (!character.IsDead)
+        {
+            if(character.IsSailing)
+                character.PlaySailingSound();
+            else
+                character.PlayFootstepSound();
+        }
+        
+        
+        
         //TODO: Walk Sound
         //if character.IsDead():
         //return

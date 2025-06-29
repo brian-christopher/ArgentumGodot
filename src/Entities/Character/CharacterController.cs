@@ -1,5 +1,6 @@
 using System.Linq;
 using ArgentumOnline.Core;
+using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Types;
 using ArgentumOnline.Core.Extensions;
 using Godot;
@@ -12,6 +13,7 @@ namespace ArgentumOnline.Entities.Character;
 public partial class CharacterController : Node2D
 {
     private bool _isCharacterInvisible;
+    private bool _isRightStep;
 
     #region Exported Properties
     [Export] public CharacterRenderer Renderer { get; set; }
@@ -143,5 +145,16 @@ public partial class CharacterController : Node2D
         DialogueLabel.Modulate = color;
         
         DialogueClearTimer.Start();
+    }
+
+    public void PlayFootstepSound()
+    {
+        _isRightStep = !_isRightStep;
+        AudioManager.Instance.PlayAudio(_isRightStep ? Declares.Paso1Wav : Declares.Paso2Wav);
+    }
+
+    public void PlaySailingSound()
+    {
+        AudioManager.Instance.PlayAudio(Declares.PasoNavegandoWav);
     }
 }
