@@ -309,4 +309,11 @@ public partial class GameScreen : Node
         MapContainer.GetCharacter(command.CharIndex)?
             .Talk(command.Message, command.Color);
     }
+
+    [Handler(ServerPacketId.RemoveCharDialog)]
+    private void HandleRemoveCharDialog(RemoveCharDialogCommand command)
+    {
+        MapContainer.GetCharacter(command.CharIndex)?
+            .Talk(string.Empty, Colors.White);
+    }
 }
