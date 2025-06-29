@@ -146,8 +146,14 @@ public partial class GameScreen : Node
         
         if (character != null)
         {
-            character.CharacterInvisible = !command.Invisible;
+            character.CharacterInvisible = command.Invisible;
         }
+    }
+
+    [Handler(ServerPacketId.RainToggle)]
+    private void HandleRainToggle()
+    {
+        
     }
 
     [Handler(ServerPacketId.CreateFX)]
