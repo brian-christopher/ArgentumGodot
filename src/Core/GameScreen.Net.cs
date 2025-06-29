@@ -197,6 +197,24 @@ public partial class GameScreen : Node
         MoveCharacter(command.CharIndex, heading);
     }
 
+    [Handler(ServerPacketId.CharacterChange)]
+    private void HandleCharacterChange(CharacterChangeCommand command)
+    {
+        CharacterController character = MapContainer.GetCharacter(command.CharIndex);
+        
+        if (character != null)
+        {
+            character.Renderer.Body = command.Body;
+            character.Renderer.Head = command.Head;
+            character.Renderer.Helmet = command.Helmet;
+            character.Renderer.Weapon = command.Weapon;
+            character.Renderer.Shield = command.Shield;
+            character.Renderer.Heading = (Heading)command.Heading;
+            
+            character.Effect.PlayEffect(command.FxId, command.FxLoops);
+        }
+    }
+
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {
