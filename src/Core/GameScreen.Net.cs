@@ -296,4 +296,10 @@ public partial class GameScreen : Node
     {
         
     }
+
+    [Handler(ServerPacketId.UpdateHP)]
+    private void HandleUpdateHp(UpdateHpCommand command)
+    {
+        
+    }
 }
