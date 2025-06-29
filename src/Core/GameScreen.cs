@@ -80,7 +80,7 @@ public partial class GameScreen : Node
         
         //	_gameInput.minimap.update_player_position(character.gridPosition.x, character.gridPosition.y)
     }
-
+    
     private bool CanMoveTo(int x, int y)
     {
         TileState tile = MapContainer.GetTile(x - 1 , y - 1);
@@ -96,17 +96,48 @@ public partial class GameScreen : Node
 
         if (character != null)
         {
-            if (MapContainer.GetTile(playerPosition.X - 1, playerPosition.Y - 1)
-                .IsBlocked())
+            if (MapContainer.GetTile(playerPosition.X - 1, playerPosition.Y - 1).IsBlocked())
             {
                 return false;
             }
+
+            if (character.Renderer.Head != Declares.CabezaCasper &&
+                character.Renderer.Body != Declares.CuerpoFragataFantasmal)
+            {
+                return false;
+            }
+            else
+            {
+                if (MapContainer.GetTile(playerPosition.X - 1, playerPosition.Y - 1).IsWater())
+                {
+                    if (MapContainer.GetTile(x - 1, y - 1).IsWater())
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (MapContainer.GetTile(x - 1, y - 1).IsWater())
+                    {
+                        return false;
+                    }
+                }
+
+                if (mainCharacter.Privileges is > 0 and < 6) 
+                {
+                    if (mainCharacter.CharacterInvisible)
+                    {
+                        return false;
+                    }
+                }
+            }
         }
-        
-        
-        
-        
-        return false;
+
+        if (_gameContext.UserSailing != MapContainer.GetTile(x - 1, y - 1).IsWater())
+        {
+            return false;
+        }
+        return true;
     }
 
     private void MoveCharacter(int characterId, Heading heading)
