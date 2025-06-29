@@ -231,6 +231,18 @@ public partial class GameScreen : Node
         }
     }
 
+    [Handler(ServerPacketId.ForceCharMove)]
+    private void HandleForceCharMove(ForceCharMoveCommand command)
+    {
+        CharacterController character = MapContainer.GetCharacter(_mainCharacterId);
+        
+        if (character != null)
+        {
+            character.StopMoving();
+            MoveCharacter(_mainCharacterId, (Heading)command.Heading);
+        } 
+    }
+
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {
