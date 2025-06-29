@@ -215,6 +215,22 @@ public partial class GameScreen : Node
         }
     }
 
+    [Handler(ServerPacketId.PosUpdate)]
+    private void HandlePosUpdate(PosUpdateCommand command)
+    {
+        CharacterController character = MapContainer.GetCharacter(_mainCharacterId);
+        
+        if (character != null)
+        {
+            character.StopMoving();
+            character.GridPosition = new Vector2I(command.X, command.Y);
+            character.Position =  new Vector2((command.X - 1) * 32, (command.Y - 1) * 32) + new Vector2(16, 32);
+            
+            //TODO Fix
+            //_gameInput.minimap.update_player_position(p.x, p.y)
+        }
+    }
+
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {
