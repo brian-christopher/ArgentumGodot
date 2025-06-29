@@ -156,6 +156,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.UpdateSta)]
+    private void HandleUpdateSta(UpdateStaCommand command)
+    {
+        
+    }
+
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {
