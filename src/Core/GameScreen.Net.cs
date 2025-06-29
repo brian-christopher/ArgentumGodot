@@ -162,6 +162,41 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.CharacterMove)]
+    private void CharacterMove(CharacterMoveCommand command)
+    {
+        CharacterController character = MapContainer.GetCharacter(command.CharIndex);
+        
+        if (character == null)
+        {
+            return;
+        }
+
+        static int Sgn(int x)
+        {
+            if (x > 0)
+                return 1;
+            if (x < 0)
+                return -1;
+            return 0;
+        }
+        
+        int addX = command.X - character.GridPosition.X;
+        int addY = command.Y - character.GridPosition.Y;
+
+        Heading heading = Heading.South;
+        if (Sgn(addX) == 1)
+            heading = Heading.East;
+        else if (Sgn(addX) == -1)
+            heading = Heading.West;
+        else if (Sgn(addY) == 1)
+            heading = Heading.South;
+        else if (Sgn(addY) == -1)
+            heading = Heading.North;
+        
+        MoveCharacter(command.CharIndex, heading);
+    }
+
     [Handler(ServerPacketId.CreateFX)]
     private void HandleCreateFx(CreateFxCommand command)
     {

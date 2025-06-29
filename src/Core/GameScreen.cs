@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Extensions;
 using ArgentumOnline.Core.Types;
@@ -18,6 +19,14 @@ public partial class GameScreen : Node
     
     private readonly CommandDispatcher _dispatcher;
 
+    private readonly Dictionary<string, Heading> _inputMap = new()
+    {
+        ["ui_left"] = Heading.West,
+        ["ui_right"] = Heading.East,
+        ["ui_up"] = Heading.North,
+        ["ui_down"] = Heading.South,
+    };
+
     public GameScreen()
     {
         _dispatcher = new(this);
@@ -34,6 +43,7 @@ public partial class GameScreen : Node
 
     public override void _Process(double delta)
     {
+        ProcessMovementInput();
         UpdateCameraPosition((float)delta);
     }
 
@@ -44,6 +54,26 @@ public partial class GameScreen : Node
         if (mainCharacter != null && MainCamera != null)
         {
             MainCamera.Position = mainCharacter.Position;
+        }
+    }
+
+    private void ProcessMovementInput()
+    {
+        if (_gameContext.Traveling || 
+            _gameContext.ViewingForum || 
+            _gameContext.Trading ||
+            _gameContext.GamePaused)
+        {
+            return;
+        }
+
+        foreach (var pair in _inputMap)
+        {
+            if (Input.IsActionPressed(pair.Key))
+            {
+                MovePlayer(pair.Value);
+                return;
+            }
         }
     }
 
