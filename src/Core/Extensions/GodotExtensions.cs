@@ -14,8 +14,8 @@ public static class GodotExtensions
     {
         return heading switch
         {
-            Heading.South => Vector2I.Up,
-            Heading.North => Vector2I.Down,
+            Heading.South => Vector2I.Down,
+            Heading.North => Vector2I.Up,
             Heading.West => Vector2I.Left,
             Heading.East => Vector2I.Right,
             _ => Vector2I.Zero,
