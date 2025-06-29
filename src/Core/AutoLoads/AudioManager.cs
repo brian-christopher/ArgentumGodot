@@ -22,12 +22,12 @@ public partial class AudioManager : Node
         }
         
         AudioStream audioStream = ResourceLoader.Load<AudioStream>($"res://assets/sounds/{waveId}.wav");
-        
         AudioStreamPlayer streamPlayer = new();
+        AddChild(streamPlayer);
+        
+        streamPlayer.Stream = audioStream;
         streamPlayer.Bus = "sfx";
         streamPlayer.Finished += () => streamPlayer.QueueFree();
         streamPlayer.Play();
-        
-        AddChild(streamPlayer);
     }
 }
