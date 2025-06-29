@@ -190,24 +190,19 @@ public partial class GameScreen : Node
             character.Effect.StopEffect();
         }
 
-        //if (!character.IsDead)
+        if (!character.IsDead)
         {
-            if(character.IsSailing)
-                character.PlaySailingSound();
-            else
-                character.PlayFootstepSound();
+            Rect2 bound = MainCamera
+                .GetCanvasTransform()
+                .AffineInverse() * MainCamera.GetViewportRect();
+
+            if (bound.Intersects(character.Boundaries))
+            {
+                if(character.IsSailing)
+                    character.PlaySailingSound();
+                else
+                    character.PlayFootstepSound();
+            }
         }
-        
-        
-        
-        //TODO: Walk Sound
-        //if character.IsDead():
-        //return
-        //    var camera = get_viewport().get_camera_2d()
-        //if Utils.GetCameraBounds(camera).intersects(character.GetBoundaries()):
-        //if character.IsNavigating():
-        //character.PlayNavigationSound()
-        //else:
-        //character.PlayWalkSound()
     }
 }
