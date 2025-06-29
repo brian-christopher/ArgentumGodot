@@ -113,6 +113,8 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.CharacterCreate)]
     private void HandleCharacterCreate(CharacterCreateCommand command)
     {
+        MapContainer.RemoveCharacter(command.CharIndex);
+        
         CharacterController character = ResourceLoader
             .Load<PackedScene>("res://scenes/entities/character/character.tscn")
             .Instantiate<CharacterController>();
