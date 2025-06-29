@@ -1,4 +1,6 @@
 using ArgentumOnline.Core.AutoLoads;
+using ArgentumOnline.Core.Extensions;
+using ArgentumOnline.Core.Types;
 using ArgentumOnline.Entities;
 using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
@@ -11,8 +13,9 @@ public partial class GameScreen : Node
     [Export] public MapContainer MapContainer { get; set; }
     [Export] public Camera2D MainCamera { get; set; }
 
+    private readonly GameContext _gameContext = new();
     private int _mainCharacterId = -1;
-        
+    
     private readonly CommandDispatcher _dispatcher;
 
     public GameScreen()
@@ -42,5 +45,98 @@ public partial class GameScreen : Node
         {
             MainCamera.Position = mainCharacter.Position;
         }
+    }
+
+    private void MovePlayer(Heading heading)
+    {
+        if (heading == Heading.None)
+            return;
+        
+        CharacterController character = MapContainer.GetCharacter(_mainCharacterId);
+        
+        if (character == null || character.IsMoving)
+            return;
+
+        Vector2I gridPosition = character.GridPosition + heading.ToVector2I();
+        
+        if (CanMoveTo(gridPosition.X, gridPosition.Y))
+        {
+            NetworkClient.Instance.SendWalk(heading);
+            
+            //No se porque esto esta asi. Lo unico que logra es que el personaje pegue un salto cuando camina
+            //Obligando al usuario a presionar la tecla L(PosUpdate)
+            if (!_gameContext.UserResting && !_gameContext.UserMeditating)
+            {
+                MoveCharacter(_mainCharacterId, heading);
+            }
+        }
+        else
+        {
+            if (character.Renderer.Heading != heading)
+            {
+                NetworkClient.Instance.SendChangeHeading(heading);
+            }
+        }
+        
+        //	_gameInput.minimap.update_player_position(character.gridPosition.x, character.gridPosition.y)
+    }
+
+    private bool CanMoveTo(int x, int y)
+    {
+        TileState tile = MapContainer.GetTile(x - 1 , y - 1);
+
+        if (tile.IsBlocked())
+        {
+            return false; 
+        }
+        
+        CharacterController character = MapContainer.GetCharacterAt(x, y);
+        CharacterController mainCharacter = MapContainer.GetCharacter(_mainCharacterId);
+        Vector2I playerPosition = mainCharacter.GridPosition;
+
+        if (character != null)
+        {
+            if (MapContainer.GetTile(playerPosition.X - 1, playerPosition.Y - 1)
+                .IsBlocked())
+            {
+                return false;
+            }
+        }
+        
+        
+        
+        
+        return false;
+    }
+
+    private void MoveCharacter(int characterId, Heading heading)
+    {
+        CharacterController character = MapContainer.GetCharacter(characterId);
+        
+        if (character == null)
+        {
+            return;
+        }
+        
+        Vector2I offset = heading.ToVector2I();
+        
+        character.Renderer.Heading = heading;
+        character.GridPosition += offset;
+        character.MoveTo(heading);
+
+        if (character.Effect.EffectId is >= 40 and <= 49)
+        {
+            character.Effect.StopEffect();
+        }
+
+        //TODO: Walk Sound
+        //if character.IsDead():
+        //return
+        //    var camera = get_viewport().get_camera_2d()
+        //if Utils.GetCameraBounds(camera).intersects(character.GetBoundaries()):
+        //if character.IsNavigating():
+        //character.PlayNavigationSound()
+        //else:
+        //character.PlayWalkSound()
     }
 }
