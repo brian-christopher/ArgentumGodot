@@ -316,4 +316,10 @@ public partial class GameScreen : Node
         MapContainer.GetCharacter(command.CharIndex)?
             .Talk(string.Empty, Colors.White);
     }
+    
+    [Handler(ServerPacketId.UpdateExp)]  
+    private void HandleUpdateExp(UpdateExpCommand command)
+    {
+        
+    }
 }
