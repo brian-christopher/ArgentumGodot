@@ -302,4 +302,11 @@ public partial class GameScreen : Node
     {
         
     }
+
+    [Handler(ServerPacketId.ChatOverHead)]
+    private void HandleChatOverHead(ChatOverHeadCommand command)
+    {
+        MapContainer.GetCharacter(command.CharIndex)?
+            .Talk(command.Message, command.Color);
+    }
 }
