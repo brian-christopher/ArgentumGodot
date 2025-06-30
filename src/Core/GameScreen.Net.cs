@@ -100,7 +100,7 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.ConsoleMsg)]
     private void HandleConsoleMessage(ConsoleMessageCommand command)
     {
-        
+        UIController.WriteToConsole(command.Message, GameAssets.FontDataList[command.FontIndex]);   
     }
 
     [Handler(ServerPacketId.ShowMessageBox)]

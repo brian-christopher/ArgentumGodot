@@ -5,6 +5,7 @@ using ArgentumOnline.Core.Types;
 using ArgentumOnline.Entities;
 using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
+using ArgentumOnline.UI;
 using Godot;
 
 namespace ArgentumOnline.Core;
@@ -13,6 +14,7 @@ public partial class GameScreen : Node
 {
     [Export] public MapContainer MapContainer { get; set; }
     [Export] public Camera2D MainCamera { get; set; }
+    [Export] public GameUIController UIController { get; set; }
 
     private readonly GameContext _gameContext = new();
     private int _mainCharacterId = -1;
