@@ -103,6 +103,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.ShowMessageBox)]
+    private void HandleShowMessageBox(ShowMessageBoxCommand command)
+    {   
+        
+    }
+
     [Handler(ServerPacketId.BlockPosition)]
     private void HandleBlockPosition(BlockPositionCommand command)
     {
