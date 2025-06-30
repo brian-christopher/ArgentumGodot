@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ArgentumOnline.Core;
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Extensions;
+using ArgentumOnline.Core.Types;
 using ArgentumOnline.Data;
 using ArgentumOnline.Net;
 using Godot;
@@ -43,16 +44,53 @@ public partial class GameUIController : CanvasLayer
                 return;
             }
 
-            if (GameContext.UsingSkill == 0)
+            if (GameContext.UsingSkill == Skill.None)
             {
                 NetworkClient.Instance.SendLeftClick(mouseTilePosition.X, mouseTilePosition.Y);
             }
             else
             {
-                NetworkClient.Instance.SendWorkLeftClick(mouseTilePosition.X, mouseTilePosition.Y, GameContext.UsingSkill);
-                GameContext.UsingSkill = 0;
+                if (GameContext.UsingSkill == Skill.Proyectiles &&
+                    !GameContext.Intervals.RequestAttackWithBow())
+                {
+                    GameContext.UsingSkill = Skill.None;
+                    RestoreDefaultCursor();
+                    
+                    WriteToConsole("No puedes lanzar proyectiles tan rápido.",
+                        GameAssets.FontDataList[(int)FontTypeNames.FontType_Talk]);
+                    return;
+                }
+
+                if (GameContext.UsingSkill == Skill.Magia &&
+                    !GameContext.Intervals.RequestCastSpell())
+                {
+                    GameContext.UsingSkill = Skill.None;
+                    RestoreDefaultCursor();
+                    
+                    WriteToConsole("No puedes lanzar hechizos tan rápido.",
+                        GameAssets.FontDataList[(int)FontTypeNames.FontType_Talk]);
+                    return;
+                }
+
+                if (GameContext.UsingSkill is Skill.Mineria or Skill.Robar or Skill.Pesca or Skill.Talar 
+                    or Skill.FundirMetal && !GameContext.Intervals.RequestWork())
+                {
+                    GameContext.UsingSkill = Skill.None;
+                    RestoreDefaultCursor();
+                    return;
+                }
+                
+                NetworkClient.Instance.SendWorkLeftClick(mouseTilePosition.X, mouseTilePosition.Y, (int)GameContext.UsingSkill);
+
+                GameContext.UsingSkill = Skill.None;
+                RestoreDefaultCursor();
             }
         }
+    }
+
+    private void RestoreDefaultCursor()
+    {
+        
     }
 
     public void WriteToConsole(string message, FontData font)

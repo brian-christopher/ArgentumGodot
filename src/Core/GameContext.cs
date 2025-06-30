@@ -1,3 +1,4 @@
+using ArgentumOnline.Core.Types;
 using ArgentumOnline.Data;
 
 namespace ArgentumOnline.Core;
@@ -22,11 +23,12 @@ public sealed class GameContext
     public int CurrentMap { get; set; }
     
     //User states
-    public int UsingSkill { get; set; }
+    public Skill UsingSkill { get; set; }
     public bool UserParalyzed { get; set; }
     public bool UserBlind { get; set; }
     public bool UserStupid { get; set; }
     public bool UserResting { get; set; }
     public bool UserMeditating { get; set; }
     public bool UserSailing { get; set; }
+    public TickIntervals Intervals { get; init; } = new();
 }
