@@ -1,6 +1,7 @@
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Extensions;
 using ArgentumOnline.Core.Types;
+using ArgentumOnline.Data;
 using ArgentumOnline.Entities.Character;
 using ArgentumOnline.Net;
 using ArgentumOnline.Net.Commands;
@@ -40,7 +41,228 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.MultiMessage)]
     private void HandleMultiMessage(MultiMessageCommand command)
     {
-        
+        Messages message = (Messages)command.Index;
+        switch (message)
+        {
+            case Messages.SafeModeOn:
+                UIController.WriteToConsole(">>SEGURO ACTIVADO<<",
+                    new FontData(Colors.Green, true, false));
+                break;
+
+            case Messages.SafeModeOff:
+                UIController.WriteToConsole(">>SEGURO DESACTIVADO<<",
+                    new FontData(Colors.Green, true, false));
+                break;
+
+            case Messages.ResuscitationSafeOn:
+                UIController.WriteToConsole("SEGURO DE RESURRECCION ACTIVADO",
+                    new FontData(Colors.Green, true, false));
+                break;
+
+            case Messages.ResuscitationSafeOff:
+                UIController.WriteToConsole("SEGURO DE RESURRECCION DESACTIVADO",
+                    new FontData(Colors.Green, true, false));
+                break;
+
+            case Messages.NpcSwing:
+                UIController.WriteToConsole("¡¡¡La criatura falló el golpe!!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.NpcKillUser:
+                UIController.WriteToConsole("¡¡La criatura te ha matado!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.BlockedWithShieldUser:
+                UIController.WriteToConsole("¡¡Has rechazado el ataque con el escudo!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.BlockedWithShieldOther:
+                UIController.WriteToConsole("¡¡El usuario rechazó el ataque con su escudo!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.UserSwing:
+                UIController.WriteToConsole("¡¡Has fallado el golpe!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.NobilityLost:
+                UIController.WriteToConsole("¡¡Has perdido tu nobleza!!",
+                    new FontData(Colors.Red, false, false));
+                break;
+
+            case Messages.NpcHitUser:
+                switch (command.Arg1)
+                {
+                    case Declares.bCabeza:
+                        UIController.WriteToConsole($"¡¡La criatura te ha pegado en la cabeza por {command.Arg2} !!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bBrazoIzquierdo:
+                    case Declares.bBrazoDerecho:
+                        UIController.WriteToConsole($"¡¡La criatura te ha pegado en el brazo por {command.Arg2} !!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bPiernaIzquierda:
+                    case Declares.bPiernaDerecha:
+                        UIController.WriteToConsole($"¡¡La criatura te ha pegado en la pierna por {command.Arg2} !!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bTorso:
+                        UIController.WriteToConsole($"¡¡La criatura te ha pegado en torso por {command.Arg2} !!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+                }
+
+                break;
+
+            case Messages.UserHitNpc:
+                UIController.WriteToConsole($"¡¡Le has pegado a la criatura por {command.Arg1} !!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.UserAttackedSwing:
+                UIController.WriteToConsole(
+                    $"¡¡{MapContainer.GetCharacter(command.Arg1)?.CharacterName} te atacó y falló!!",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.UserHittedByUser:
+                string characterName = MapContainer.GetCharacter(command.Arg1)?.CharacterName ?? string.Empty;
+                int damage = command.Arg3;
+
+                switch (command.Arg2)
+                {
+                    case Declares.bCabeza:
+                        UIController.WriteToConsole($"¡¡{characterName} te ha pegado en la cabeza por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bBrazoIzquierdo:
+                    case Declares.bBrazoDerecho:
+                        UIController.WriteToConsole($"¡¡{characterName} te ha pegado en el brazo por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bPiernaIzquierda:
+                    case Declares.bPiernaDerecha:
+                        UIController.WriteToConsole($"¡¡{characterName} te ha pegado en la pierna por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bTorso:
+                        UIController.WriteToConsole($"¡¡{characterName} te ha pegado en el torso por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+                }
+
+                break;
+
+            case Messages.UserHittedUser:
+            {
+                characterName = MapContainer.GetCharacter(command.Arg1)?.CharacterName ?? string.Empty;
+                damage = command.Arg3;
+
+                switch (command.Arg2)
+                {
+                    case Declares.bCabeza:
+                        UIController.WriteToConsole($"¡¡Le has pegado a {characterName} en la cabeza por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bBrazoIzquierdo:
+                    case Declares.bBrazoDerecho:
+                        UIController.WriteToConsole($"¡¡Le has pegado a {characterName} en el brazo por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bPiernaIzquierda:
+                    case Declares.bPiernaDerecha:
+                        UIController.WriteToConsole($"¡¡Le has pegado a {characterName} en la pierna por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+
+                    case Declares.bTorso:
+                        UIController.WriteToConsole($"¡¡Le has pegado a {characterName} en la cabeza por {damage}!!",
+                            new FontData(Colors.Red, true, false));
+                        break;
+                }
+
+                break;
+            }
+
+            case Messages.WorkRequestTarget:
+                _gameContext.UsingSkill = (Skill)command.Arg1;
+
+                command.StringArg1 = _gameContext.UsingSkill switch
+                {
+                    Skill.Magia => "Haz click sobre el objetivo...",
+                    Skill.Pesca => "Haz click sobre el sitio donde quieres pescar...",
+                    Skill.Robar => "Haz click sobre la víctima...",
+                    Skill.Talar => "Haz click sobre el árbol...",
+                    Skill.Mineria => "Haz click sobre el yacimiento...",
+                    Skill.Domar => "Haz click sobre la criatura...",
+                    Skill.FundirMetal => "Haz click sobre la fragua...",
+                    Skill.Proyectiles => "Haz click sobre la victima...",
+                };
+                UIController.WriteToConsole(command.StringArg1,
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.HaveKilledUser:
+                characterName = MapContainer.GetCharacter(command.Arg1).CharacterName ?? string.Empty;
+
+                UIController.WriteToConsole($"Has matado a {characterName}!", new FontData(Colors.Red, true, false));
+                UIController.WriteToConsole($"Has ganado a {command.Arg2} puntos de experiencia.",
+                    new FontData(Colors.Red, true, false));
+                break;
+
+            case Messages.UserKill:
+                characterName = MapContainer.GetCharacter(command.Arg1).CharacterName ?? string.Empty;
+
+                UIController.WriteToConsole($"¡{characterName} te ha matado!", new FontData(Colors.Red, true, false));
+                break;
+
+
+            case Messages.GoHome:
+                int distance = command.Arg1;
+                int time = command.Arg2;
+                string home = command.StringArg1;
+
+                var temp = time switch
+                {
+                    >= 60 when time % 60 == 0 => $"{time / 60} minutos.",
+                    >= 60 => $"{time / 60} minutos y {time % 60} segundos.",
+                    _ => $"{time} segundos."
+                };
+
+                UIController.WriteToConsole(
+                    $"Te encuentras a {distance} mapas de la {home}, este viaje durará {temp}",
+                    new FontData(Colors.Red, true, false));
+
+                _gameContext.Traveling = true;
+                break;
+
+            case Messages.FinishHome:
+                UIController.WriteToConsole("Has llegado a tu hogar. El viaje ha finalizado.",
+                    new FontData(Colors.White, true, false));
+
+                _gameContext.Traveling = false;
+                break;
+
+            case Messages.CancelGoHome:
+                UIController.WriteToConsole("Tu viaje ha sido cancelado.",
+                    new FontData(Colors.Red, false, false));
+
+                _gameContext.Traveling = false;
+                break;
+        }
     }
 
     [Handler(ServerPacketId.ChangeInventorySlot)]
