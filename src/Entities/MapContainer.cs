@@ -34,7 +34,7 @@ public partial class MapContainer : Node2D
         
         _currentView?.QueueFree();
         _currentView = ResourceLoader
-            .Load<PackedScene>("res://scenes/maps/map_1.tscn")
+            .Load<PackedScene>($"res://scenes/maps/map_{mapId}.tscn")
             .Instantiate<Node2D>();
 
         _tiles = _currentView.GetMeta("data")
