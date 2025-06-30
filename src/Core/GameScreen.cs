@@ -41,6 +41,7 @@ public partial class GameScreen : Node
         NetworkClient.Instance.OnReceive += InstanceOnOnReceive;
         
         NetworkClient.Instance.ConnectToHost("127.0.0.1", 7666);
+        UIController.GameContext = _gameContext;
     }
 
     public override void _Process(double delta)
