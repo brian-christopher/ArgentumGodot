@@ -67,6 +67,7 @@ public partial class CharacterController : Node2D
     
     public override void _Ready()
     {
+        DialogueClearTimer.WaitTime = 6.0;
         DialogueClearTimer.Timeout += () =>
         {
             DialogueLabel.Text = string.Empty;
