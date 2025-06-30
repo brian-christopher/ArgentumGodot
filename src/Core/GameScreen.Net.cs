@@ -1,3 +1,4 @@
+using System;
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Extensions;
 using ArgentumOnline.Core.Types;
@@ -348,13 +349,40 @@ public partial class GameScreen : Node
     {
         MapContainer.RemoveCharacter(command.CharIndex);
         
+        PlayerType privileges = (PlayerType)command.Privileges;
+        
+        if (privileges != 0)
+        {
+            if ((privileges & PlayerType.ChaosCouncil) != PlayerType.None &&
+                (privileges & PlayerType.User) != PlayerType.None)
+            {
+                privileges = privileges ^ PlayerType.ChaosCouncil;
+            }
+
+            if ((privileges & PlayerType.RoyalCouncil) != PlayerType.None &&
+                (privileges & PlayerType.User) != PlayerType.None)
+            {
+                privileges = privileges ^ PlayerType.RoyalCouncil;
+            }
+
+            if ((privileges & PlayerType.RoleMaster) != PlayerType.None)
+            {
+                privileges = PlayerType.RoleMaster;
+            }
+
+            privileges = (PlayerType)(Math.Log((double)privileges) / Math.Log(2));
+        }
+
+        command.Privileges = (int)privileges;
+        
         CharacterController character = ResourceLoader
             .Load<PackedScene>("res://scenes/entities/character/character.tscn")
             .Instantiate<CharacterController>();
         
         character.CharacterName = command.Name;
-        character.CharacterNameColor = Colors.White;
+        character.CharacterNameColor = Utils.GetNickColor(command.NickColor, command.Privileges);
         character.CharacterId = command.CharIndex;
+        character.Privileges = command.Privileges;
         character.Position = new Vector2((command.X - 1) * 32, (command.Y - 1) * 32) + new Vector2(16, 32);
         character.GridPosition = new Vector2I(command.X, command.Y);
         

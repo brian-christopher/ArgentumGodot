@@ -21,16 +21,51 @@ internal static class GameAssets
 {
     public static GrhData[] GrhDataList { get; private set; }
     public static FontData[] FontDataList { get; private set; }
+    public static Color[] PlayerColors { get; private set; }
 
     public static void Load()
     {
         LoadGrhData();
         LoadFonts();
+        LoadPlayerColors();
     }
 
     public static Texture2D GetTexture(int id)
     {
         return ResourceLoader.Load<Texture2D>($"res://assets/textures/{id}.png");
+    }
+    
+    
+    private static void LoadPlayerColors()
+    {
+        ConfigFile initReader = new();
+        initReader.Load("res://assets/init/colores.dat");
+
+        PlayerColors = new Color[51];
+        Array.Fill(PlayerColors, Colors.White);
+
+        for (int i = 0; i < 49; i++)
+        {
+            PlayerColors[i] = Color.Color8(
+                r8: initReader.GetValue($"{i}", "R", 0).AsByte(),
+                g8: initReader.GetValue($"{i}", "G", 0).AsByte(),
+                b8: initReader.GetValue($"{i}", "B", 0).AsByte());
+        }
+        
+        PlayerColors[50] = Color.Color8(
+            r8: initReader.GetValue("Cr", "R", 0).AsByte(),
+            g8: initReader.GetValue("Cr", "G", 0).AsByte(),
+            b8: initReader.GetValue("Cr", "B", 0).AsByte());
+        
+        PlayerColors[49] = Color.Color8(
+            r8: initReader.GetValue("Ci", "R", 0).AsByte(),
+            g8: initReader.GetValue("Ci", "G", 0).AsByte(),
+            b8: initReader.GetValue("Ci", "B", 0).AsByte());
+        
+        PlayerColors[48] = Color.Color8(
+            r8: initReader.GetValue("At", "R", 0).AsByte(),
+            g8: initReader.GetValue("At", "G", 0).AsByte(),
+            b8: initReader.GetValue("At", "B", 0).AsByte());
     }
     
     private static void LoadGrhData()
