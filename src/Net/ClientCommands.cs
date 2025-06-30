@@ -74,4 +74,38 @@ public static class ClientCommands
         
         client.Send(data);
     }
+
+    public static void SendDoubleClick(this NetworkClient client, int x, int y)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.DoubleClick)
+            .WriteByte((byte)x)
+            .WriteByte((byte)y)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendLeftClick(this NetworkClient client, int x, int y)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.LeftClick)
+            .WriteByte((byte)x)
+            .WriteByte((byte)y)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendWorkLeftClick(this NetworkClient client, int x, int y, int skill)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.WorkLeftClick)
+            .WriteByte((byte)x)
+            .WriteByte((byte)y)
+            .WriteByte((byte)skill)
+            .Build();
+        
+        client.Send(data);
+    }
 }
