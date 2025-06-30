@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c72vpe5xpnd1"]
+[gd_scene load_steps=4 format=3 uid="uid://c72vpe5xpnd1"]
 
 [ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
 [ext_resource type="Script" uid="uid://bdmaaxo3gc6is" path="res://src/Entities/MapContainer.cs" id="2_beu7v"]
+[ext_resource type="Script" uid="uid://kn104ktkgjy5" path="res://src/UI/GameUIController.cs" id="3_dtf0s"]
 
 [node name="GameScreen" type="Node" node_paths=PackedStringArray("MapContainer", "MainCamera")]
 script = ExtResource("1_v3r1a")
@@ -12,3 +13,17 @@ MainCamera = NodePath("MainCamera")
 script = ExtResource("2_beu7v")
 
 [node name="MainCamera" type="Camera2D" parent="."]
+
+[node name="GameUIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("MainCamera", "ConsoleOutput")]
+script = ExtResource("3_dtf0s")
+MainCamera = NodePath("../MainCamera")
+ConsoleOutput = NodePath("Console")
+
+[node name="Console" type="RichTextLabel" parent="GameUIController"]
+offset_left = 23.0
+offset_top = 27.0
+offset_right = 446.0
+offset_bottom = 140.0
+bbcode_enabled = true
+scroll_following = true
+metadata/_edit_lock_ = true
