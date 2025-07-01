@@ -290,8 +290,44 @@ public partial class GameScreen : Node
         _gameContext.PlayerInventory[command.Slot - 1] = itemStack;
     }
 
+    [Handler(ServerPacketId.ChangeNPCInventorySlot)]
+    private void HandleChangeNPCInventorySlot(ChangeNPCInventorySlotCommand command)
+    {
+        ItemData item = new();
+        item.Name = command.Name;
+        item.Index = command.Index;
+        item.Type = (ItemClass)command.Type;
+        item.Price = command.Price;
+        item.Icon = GameAssets.GetTextureFromGrhId(command.GrhIndex);
+
+        item.MaxHit = command.MaxHit;
+        item.MinHit = command.MinHit;
+
+        item.MinDef = command.MinDef;
+        item.MaxDef = command.MaxDef;
+
+        var itemStack = new ItemStack(
+            Quantity: command.Quantity,
+            Equipped: false,
+            Item: item);
+        
+        _gameContext.TradeInventory[command.Slot - 1] = itemStack;
+    }
+    
     [Handler(ServerPacketId.ChangeSpellSlot)]
     private void HandleChangeSpellSlot(ChangeSpellSlotCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.CommerceInit)]
+    private void HandleCommerceInit()
+    {
+        
+    }
+
+    [Handler(ServerPacketId.CommerceEnd)]
+    private void HandleCommerceEnd()
     {
         
     }
