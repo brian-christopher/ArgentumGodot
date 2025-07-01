@@ -20,6 +20,12 @@ config/icon="res://icon.svg"
 NetworkClient="*res://src/Core/AutoLoads/NetworkClient.cs"
 AudioManager="*res://src/Core/AutoLoads/AudioManager.cs"
 
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=768
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="ArgentumOnline"
