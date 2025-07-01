@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsur8gku0cfak"]
+
+[ext_resource type="Script" uid="uid://o6qaa0a1b18f" path="res://src/UI/Gameplay/InventoryContainerDisplay.cs" id="1_hnv5g"]
+[ext_resource type="PackedScene" uid="uid://bnhckiapa8qdx" path="res://scenes/ui/gameplay/item_slot_display.tscn" id="2_wvv1j"]
+
+[node name="InventoryContainerDisplay" type="GridContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_hnv5g")
+ItemSlotDisplaysScene = ExtResource("2_wvv1j")

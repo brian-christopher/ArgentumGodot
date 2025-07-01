@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnhckiapa8qdx"]
+
+[ext_resource type="Script" uid="uid://ckcqoinhfhuq3" path="res://src/UI/Gameplay/ItemSlotDisplay.cs" id="1_i244u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inhes"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_i244u"]
+font_size = 11
+
+[node name="ItemSlotDisplay" type="Panel" node_paths=PackedStringArray("QuantityLabel", "EquippedLabel", "IconTextureRect")]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -992.0
+offset_bottom = -736.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_inhes")
+script = ExtResource("1_i244u")
+QuantityLabel = NodePath("Quantity")
+EquippedLabel = NodePath("Equipped")
+IconTextureRect = NodePath("Icon")
+
+[node name="Icon" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="Quantity" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_i244u")
+horizontal_alignment = 1
+vertical_alignment = 2
+clip_text = true
+
+[node name="Equipped" type="Label" parent="."]
+visible = false
+self_modulate = Color(1, 0.968627, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "E"
+label_settings = SubResource("LabelSettings_i244u")
+horizontal_alignment = 2

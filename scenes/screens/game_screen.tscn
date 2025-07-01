@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c72vpe5xpnd1"]
+[gd_scene load_steps=5 format=3 uid="uid://c72vpe5xpnd1"]
 
 [ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
 [ext_resource type="Script" uid="uid://bdmaaxo3gc6is" path="res://src/Entities/MapContainer.cs" id="2_beu7v"]
 [ext_resource type="Script" uid="uid://kn104ktkgjy5" path="res://src/UI/GameUIController.cs" id="3_dtf0s"]
+[ext_resource type="PackedScene" uid="uid://bsur8gku0cfak" path="res://scenes/ui/gameplay/inventory_container_display.tscn" id="4_5wjna"]
 
 [node name="GameScreen" type="Node" node_paths=PackedStringArray("MapContainer", "MainCamera", "UIController")]
 script = ExtResource("1_v3r1a")
@@ -15,10 +16,11 @@ script = ExtResource("2_beu7v")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 
-[node name="GameUIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("MainCamera", "ConsoleOutput")]
+[node name="GameUIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("MainCamera", "ConsoleOutput", "InventoryContainer")]
 script = ExtResource("3_dtf0s")
 MainCamera = NodePath("../MainCamera")
 ConsoleOutput = NodePath("Console")
+InventoryContainer = NodePath("InventoryContainerDisplay")
 
 [node name="Console" type="RichTextLabel" parent="GameUIController"]
 offset_left = 23.0
@@ -28,3 +30,18 @@ offset_bottom = 140.0
 bbcode_enabled = true
 scroll_following = true
 metadata/_edit_lock_ = true
+
+[node name="InventoryContainerDisplay" parent="GameUIController" instance=ExtResource("4_5wjna")]
+custom_minimum_size = Vector2(160, 160)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 0.0
+offset_bottom = 80.0
+grow_horizontal = 0
+grow_vertical = 2
+columns = 5

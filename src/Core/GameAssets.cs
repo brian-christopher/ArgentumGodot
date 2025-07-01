@@ -34,7 +34,13 @@ internal static class GameAssets
     {
         return ResourceLoader.Load<Texture2D>($"res://assets/textures/{id}.png");
     }
-    
+
+    public static Texture2D GetTextureFromGrhId(int grhId)
+    {
+        if(grhId > 0 && grhId < GrhDataList.Length)
+            return GetTexture(GrhDataList[grhId].FileId);
+        return null;
+    }
     
     private static void LoadPlayerColors()
     {

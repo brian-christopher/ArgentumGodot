@@ -6,17 +6,25 @@ using ArgentumOnline.Core.Extensions;
 using ArgentumOnline.Core.Types;
 using ArgentumOnline.Data;
 using ArgentumOnline.Net;
+using ArgentumOnline.UI.Gameplay;
 using Godot;
 
 namespace ArgentumOnline.UI;
 
 public partial class GameUIController : CanvasLayer
 {
-    [Export] public Camera2D MainCamera { get; set; }
-    [Export] public RichTextLabel ConsoleOutput { get; set; }
+    #region Exported Properties
+    [Export] private Camera2D MainCamera { get; set; }
+    [Export] private RichTextLabel ConsoleOutput { get; set; }
+    [Export] private InventoryContainerDisplay InventoryContainer { get; set; }
+    #endregion
     
     public GameContext GameContext { get; set; }
-
+    
+    public void Initialize()
+    {
+        InventoryContainer.SetInventory(GameContext.PlayerInventory);
+    }
 
     public override void _UnhandledInput(InputEvent @event)
     {

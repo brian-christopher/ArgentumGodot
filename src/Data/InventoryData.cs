@@ -8,36 +8,29 @@ public record ItemStack(
     bool Equipped,
     ItemData Item);
 
-public sealed class InventoryData : IEnumerable<ItemStack>
+public sealed class InventoryData
 {
     private readonly ItemStack[] _slots;
-    public event Action<ItemStack> OnChange;
+    public event Action<int, ItemStack> SlotChanged;
 
     public InventoryData(int length)
     {
         _slots = new ItemStack[length];
+        
+        for (int i = 0; i < length; i++)
+            _slots[i] = new ItemStack(0, false, new ItemData());       
     }
     
     public int Length => _slots.Length;
-    
+
     public ItemStack this[int index]
     {
         get => _slots[index];
-        
+
         set
         {
             _slots[index] = value;
-            OnChange?.Invoke(value);
+            SlotChanged?.Invoke(index, value);
         }
-    }
-
-    public IEnumerator<ItemStack> GetEnumerator()
-    {
-        return ((IEnumerable<ItemStack>)_slots).GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 }
