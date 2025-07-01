@@ -110,7 +110,7 @@ public partial class MapContainer : Node2D
         }
     }
 
-    public void RemoveOjbect(int x, int y)
+    public void RemoveObject(int x, int y)
     {
         Node2D node = _objects
             .FirstOrDefault(o => o.GetMeta(GridPositionKey).AsVector2I() == new Vector2I(x, y));
