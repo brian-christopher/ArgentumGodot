@@ -14,10 +14,14 @@ namespace ArgentumOnline.UI;
 public partial class GameUIController : CanvasLayer
 {
     #region Exported Properties
+    [Export] private PackedScene TradePanelDisplayScene { get; set; }
+    
     [Export] private Camera2D MainCamera { get; set; }
     [Export] private RichTextLabel ConsoleOutput { get; set; }
     [Export] private InventoryContainerDisplay InventoryContainer { get; set; }
     #endregion
+
+    private Node _currentPanelDisplay;
     
     public GameContext GameContext { get; set; }
     
@@ -117,6 +121,25 @@ public partial class GameUIController : CanvasLayer
             Color: Colors.White,
             Bold: false,
             Italic: false));
+    }
+
+    public void OpenTrade()
+    {
+        TradePanelDisplay tradePanelDisplay = TradePanelDisplayScene
+            .Instantiate<TradePanelDisplay>();
+
+        tradePanelDisplay.PlayerInventory = GameContext.PlayerInventory;
+        tradePanelDisplay.NpcInventory = GameContext.TradeInventory;
+        AddChild(tradePanelDisplay);
+
+        _currentPanelDisplay = tradePanelDisplay;
+        GameContext.Trading = true;
+    }
+
+    public void CloseTrade()
+    {
+        _currentPanelDisplay?.QueueFree();
+        GameContext.Trading = false;
     }
     
     private static string FormatBBCode(string message, FontData font)

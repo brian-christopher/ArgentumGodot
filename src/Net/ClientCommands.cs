@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Types;
 
@@ -10,12 +11,12 @@ public static class ClientCommands
         return binaryPacketWriter.WriteByte((byte)packetId);
     }
     
-    private static void SendOnePacket(Core.AutoLoads.NetworkClient client, ClientPacketId packetId)
+    private static void SendOnePacket(NetworkClient client, ClientPacketId packetId)
     {
         client.Send([(byte)packetId]);
     }
     
-    public static void SendLoginExistingCharacter(this Core.AutoLoads.NetworkClient client, string username, string password)
+    public static void SendLoginExistingCharacter(this NetworkClient client, string username, string password)
     {
         byte[] data = new BinaryPacketWriter()
             .WriteByte(ClientPacketId.LoginExistingChar)
@@ -29,7 +30,7 @@ public static class ClientCommands
         client.Send(data);
     }
 
-    public static void SendLoginNewChar(this Core.AutoLoads.NetworkClient client, string username, string password, string email,
+    public static void SendLoginNewChar(this NetworkClient client, string username, string password, string email,
         int @class, int race, int gender, int home, int head)
     {
         byte[] data = new BinaryPacketWriter()
@@ -50,9 +51,36 @@ public static class ClientCommands
         client.Send(data);
     }
 
-    public static void SendThrowDice(this Core.AutoLoads.NetworkClient client)
+    public static void SendThrowDice(this NetworkClient client)
     {
         SendOnePacket(client, ClientPacketId.ThrowDices);
+    }
+
+    public static void SendCommerceEnd(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.CommerceEnd);
+    }
+
+    public static void SendCommerceBuy(this NetworkClient client, int slot, int quantity)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.CommerceBuy)
+            .WriteByte((byte)slot)
+            .WriteInteger((short)quantity)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendCommerceSell(this NetworkClient client, int slot, int quantity)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.CommerceSell)
+            .WriteByte((byte)slot)
+            .WriteInteger((short)quantity)
+            .Build();
+        
+        client.Send(data);
     }
     
     public static void SendWalk(this NetworkClient client, Heading heading)

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ArgentumOnline.Data;
 using Godot;
@@ -6,10 +7,13 @@ namespace ArgentumOnline.UI.Gameplay;
 
 public partial class InventoryContainerDisplay : GridContainer
 {
+    #region Exported Properties
     [Export] private PackedScene ItemSlotDisplaysScene { get; set; }
+    #endregion
     
     public InventoryData InventoryData { get; private set; }
     public int SelectedSlot { get; private set; } = -1;
+    public event Action<int> SlotPressed;
 
     public override void _ExitTree()
     {
@@ -50,6 +54,7 @@ public partial class InventoryContainerDisplay : GridContainer
         GetItemSlotDisplay(index)?.SetSelected(true);
         
         SelectedSlot = index;
+        SlotPressed?.Invoke(index);
     }
 
     private void OnInventoryDataSlotChanged(int index, ItemStack itemStack)

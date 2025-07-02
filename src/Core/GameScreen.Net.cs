@@ -320,16 +320,22 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.TradeOK)]
+    private void HandleTradeOK()
+    {
+        
+    }
+
     [Handler(ServerPacketId.CommerceInit)]
     private void HandleCommerceInit()
     {
-        
+        UIController.OpenTrade();
     }
 
     [Handler(ServerPacketId.CommerceEnd)]
     private void HandleCommerceEnd()
     {
-        
+        UIController.CloseTrade();
     }
 
     [Handler(ServerPacketId.UserIndexInServer)]

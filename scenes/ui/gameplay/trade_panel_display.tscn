@@ -1,0 +1,181 @@
+[gd_scene load_steps=7 format=3 uid="uid://4gwqpe8jhs4p"]
+
+[ext_resource type="Script" uid="uid://r37v3tfnin8d" path="res://src/UI/Gameplay/TradePanelDisplay.cs" id="1_dofq1"]
+[ext_resource type="PackedScene" uid="uid://bsur8gku0cfak" path="res://scenes/ui/gameplay/inventory_container_display.tscn" id="3_d6ep2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d6ep2"]
+bg_color = Color(0.214281, 0.214281, 0.214281, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jg4px"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_d6ep2"]
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_td33b"]
+font_size = 14
+
+[node name="TradePanelDisplay" type="Panel" node_paths=PackedStringArray("PlayerInventoryDisplay", "NpcInventoryDisplay", "ObjectInfoLabel", "ObjectPropertiesLabel", "QuantitySpinBox")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -231.0
+offset_top = -243.0
+offset_right = 231.0
+offset_bottom = 243.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d6ep2")
+script = ExtResource("1_dofq1")
+PlayerInventoryDisplay = NodePath("PlayerInventory")
+NpcInventoryDisplay = NodePath("NpcInventory/Container")
+ObjectInfoLabel = NodePath("ObjectInfo/MarginContainer/Label")
+ObjectPropertiesLabel = NodePath("ObjectProperties/MarginContainer/Label")
+QuantitySpinBox = NodePath("QuantityInput")
+metadata/_edit_lock_ = true
+
+[node name="Title" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 9.0
+offset_right = 421.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Title"]
+layout_mode = 2
+text = "Comerciar"
+label_settings = SubResource("LabelSettings_jg4px")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 9.0
+offset_right = 457.0
+offset_bottom = 40.0
+text = "X"
+
+[node name="ObjectInfo" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 76.0
+offset_right = 231.0
+offset_bottom = 134.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ObjectInfo"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Label" type="Label" parent="ObjectInfo/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_d6ep2")
+horizontal_alignment = 1
+clip_text = true
+
+[node name="Title2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 53.0
+offset_right = 405.0
+offset_bottom = 76.0
+text = "Propiedades"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Title3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 53.0
+offset_right = 177.0
+offset_bottom = 76.0
+text = "Informacion"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ObjectProperties" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 274.0
+offset_top = 80.0
+offset_right = 426.0
+offset_bottom = 131.0
+
+[node name="MarginContainer" type="MarginContainer" parent="ObjectProperties"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="ObjectProperties/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+label_settings = SubResource("LabelSettings_td33b")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="PlayerInventory" parent="." instance=ExtResource("3_d6ep2")]
+custom_minimum_size = Vector2(160, 192)
+layout_mode = 0
+offset_left = 255.0
+offset_top = 173.0
+offset_right = 415.0
+offset_bottom = 365.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+metadata/_edit_lock_ = true
+
+[node name="NpcInventory" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(175, 192)
+layout_mode = 0
+offset_left = 27.0
+offset_top = 173.0
+offset_right = 202.0
+offset_bottom = 333.0
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Container" parent="NpcInventory" instance=ExtResource("3_d6ep2")]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="BuyButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 406.0
+offset_right = 156.0
+offset_bottom = 442.0
+text = "🛒 Comprar"
+
+[node name="SellButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 310.0
+offset_top = 406.0
+offset_right = 446.0
+offset_bottom = 442.0
+text = "💵 Vender"
+
+[node name="QuantityInput" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 406.0
+offset_right = 297.0
+offset_bottom = 437.0
+value = 1.0
+rounded = true
+update_on_text_changed = true
+
+[connection signal="pressed" from="CloseButton" to="." method="OnCloseButtonPressed"]
+[connection signal="pressed" from="BuyButton" to="." method="OnBuyButtonPressed"]
+[connection signal="pressed" from="SellButton" to="." method="OnSellButtonPressed"]
