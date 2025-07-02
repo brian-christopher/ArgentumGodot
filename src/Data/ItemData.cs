@@ -43,5 +43,8 @@ public sealed class ItemData
     public bool IsUsable => UsableTypes.Contains(Type);
     
     public bool IsWeapon => Type == ItemClass.eOBJType_otWeapon;
-    public bool IsArmour => Type == ItemClass.eOBJType_otArmadura;
+    public bool IsArmour => Type 
+        is ItemClass.eOBJType_otArmadura 
+        or ItemClass.eOBJType_otCASCO 
+        or ItemClass.eOBJType_otESCUDO;
 }
