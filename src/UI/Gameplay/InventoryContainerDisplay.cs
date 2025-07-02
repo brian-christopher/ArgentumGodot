@@ -10,7 +10,15 @@ public partial class InventoryContainerDisplay : GridContainer
     
     public InventoryData InventoryData { get; private set; }
     public int SelectedSlot { get; private set; } = -1;
-    
+
+    public override void _ExitTree()
+    {
+        if (InventoryData != null)
+        {
+            InventoryData.SlotChanged -= OnInventoryDataSlotChanged;
+        }
+    }
+
     public void SetInventory(InventoryData inventoryData)
     {
         InventoryData = inventoryData;
