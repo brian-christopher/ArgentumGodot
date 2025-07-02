@@ -338,6 +338,36 @@ public partial class GameScreen : Node
         UIController.CloseTrade();
     }
 
+    [Handler(ServerPacketId.ChangeBankSlot)]
+    private void HandleChangeBankSlot(ChangeBankSlotCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.BankInit)]
+    private void HandleBankInit(BankInitCommand command)
+    {
+        
+    }
+
+    [Handler(ServerPacketId.BankEnd)]
+    private void HandleBankEnd()
+    {
+        
+    }
+
+    [Handler(ServerPacketId.BankOK)]
+    private void HandleBankOk()
+    {
+        
+    }
+
+    [Handler(ServerPacketId.UpdateBankGold)]
+    private void HandleUpdateBankGold(UpdateBankGoldCommand command)
+    {
+        
+    }
+
     [Handler(ServerPacketId.UserIndexInServer)]
     private void HandleUserIndexInServer(UserIndexInServerCommand command)
     {
