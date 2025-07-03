@@ -528,6 +528,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.ShowSignal)]
+    private void HandleShowSignal(ShowSignalCommand command)
+    {
+        
+    }
+
     [Handler(ServerPacketId.UpdateSta)]
     private void HandleUpdateSta(UpdateStaCommand command)
     {
