@@ -518,7 +518,7 @@ public partial class GameScreen : Node
         
         if (character != null)
         {
-            character.CharacterInvisible = command.Invisible;
+            character.CharacterInvisible = !command.Invisible;
         }
     }
 
