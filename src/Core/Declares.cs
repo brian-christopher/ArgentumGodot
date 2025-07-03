@@ -14,6 +14,8 @@ public static class Declares
     public const int TileSize = 32;
     public const int MapSize = 100;
 
+    public const int InvalidSlot = -1;
+
     public const int MaxSkills = 20;
     public const int NumSkills = 20;
     public const int NumAtributos = 5;

@@ -82,6 +82,16 @@ public static class ClientCommands
         
         client.Send(data);
     }
+
+    public static void SenUseItem(this NetworkClient client, int slot)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.UseItem)
+            .WriteByte((byte)slot)
+            .Build();
+        
+        client.Send(data);   
+    }
     
     public static void SendBankDepositItem(this NetworkClient client, int slot, int quantity)
     {

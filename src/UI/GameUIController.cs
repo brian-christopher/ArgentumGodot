@@ -29,6 +29,12 @@ public partial class GameUIController : CanvasLayer
     public void Initialize()
     {
         InventoryContainer.SetInventory(GameContext.PlayerInventory);
+        InventoryContainer.SlotPressed += OnInventoryContainerSlotPressed;
+    }
+    
+    public override void _ExitTree()
+    {
+        InventoryContainer.SlotPressed -= OnInventoryContainerSlotPressed;
     }
 
     public override void _UnhandledInput(InputEvent @event)
@@ -99,6 +105,33 @@ public partial class GameUIController : CanvasLayer
                 RestoreDefaultCursor();
             }
         }
+    }
+    
+    private void OnInventoryContainerSlotPressed(int index)
+    {
+        UseInventoryItem(true);
+    }
+
+    private void UseInventoryItem(bool doubleClick)
+    {
+        if(!CanUseInventoryItem(doubleClick))
+            return;
+
+        if (GameContext.Trading || GameContext.GamePaused)
+            return;
+        
+        int slot = InventoryContainer.SelectedSlot;
+        if (slot == Declares.InvalidSlot) 
+            return;
+        
+        NetworkClient.Instance.SenUseItem(slot + 1);
+    }
+
+    private bool CanUseInventoryItem(bool doubleClick)
+    {
+        return doubleClick 
+            ? GameContext.Intervals.RequestUseItemWithDoubleClick()
+            : GameContext.Intervals.RequestUseItemWithU();
     }
 
     private void RestoreDefaultCursor()
