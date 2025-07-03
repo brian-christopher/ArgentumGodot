@@ -39,7 +39,7 @@ public class MultiMessageCommand : ICommand
                 break;
             
             case Messages.WorkRequestTarget:
-                Arg1 = reader.ReadInteger(); 
+                Arg1 = reader.ReadByte(); 
                 break;
                 
             case Messages.HaveKilledUser:
