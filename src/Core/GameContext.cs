@@ -23,6 +23,7 @@ public sealed class GameContext
     public int CurrentMap { get; set; }
     
     //User states
+    public PlayerStats PlayerStats { get; init; } = new();
     public Skill UsingSkill { get; set; }
     public bool UserParalyzed { get; set; }
     public bool UserBlind { get; set; }

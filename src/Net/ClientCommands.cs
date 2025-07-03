@@ -1,3 +1,4 @@
+using System.IO.Pipes;
 using System.Runtime.CompilerServices;
 using ArgentumOnline.Core.AutoLoads;
 using ArgentumOnline.Core.Types;
@@ -91,6 +92,27 @@ public static class ClientCommands
             .Build();
         
         client.Send(data);   
+    }
+    
+    public static void SendEquipItem(this NetworkClient client, int slot)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.EquipItem)
+            .WriteByte((byte)slot)
+            .Build();
+        
+        client.Send(data);   
+    }
+
+
+    public static void SendAttack(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.Attack);
+    }
+    
+    public static void SendPickup(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.PickUp);
     }
     
     public static void SendBankDepositItem(this NetworkClient client, int slot, int quantity)

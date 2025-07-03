@@ -43,6 +43,48 @@ public partial class GameUIController : CanvasLayer
         {
             HandleEventMouseButton(button);
         }
+
+        if (@event is InputEventKey eventKey)
+        {
+            HandleEventKey(eventKey);
+        }
+    }
+
+    private void HandleEventKey(InputEventKey eventKey)
+    {
+        if (eventKey.IsActionPressed("use_object"))
+        {
+            UseInventoryItem(false);
+        }
+
+        if (eventKey.IsActionPressed("attack"))
+        {
+            NetworkClient.Instance.SendAttack();
+        }
+
+        if (eventKey.IsActionPressed("pickup"))
+        {
+            NetworkClient.Instance.SendPickup();
+        }
+
+        if (eventKey.IsActionPressed("equip_item"))
+        {
+            EquipSelectedItem();
+        }
+    }
+
+    private void EquipSelectedItem()
+    {
+        if (!GameContext.PlayerStats.IsAlive)
+        {
+            WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);
+            return;
+        }
+
+        if (InventoryContainer.SelectedSlot != Declares.InvalidSlot)
+        {
+            NetworkClient.Instance.SendEquipItem(InventoryContainer.SelectedSlot + 1);
+        }
     }
 
     private void HandleEventMouseButton(InputEventMouseButton mouseEvent)
