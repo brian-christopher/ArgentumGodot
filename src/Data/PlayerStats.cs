@@ -2,8 +2,8 @@ namespace ArgentumOnline.Data;
 
 public sealed class PlayerStats
 {
-    public int MinHP { get; set; }
-    public int MaxHP { get; set; }
+    public int MinHp { get; set; }
+    public int MaxHp { get; set; }
 
-    public bool IsAlive => MinHP > 0;
+    public bool IsAlive => MinHp > 0;
 }

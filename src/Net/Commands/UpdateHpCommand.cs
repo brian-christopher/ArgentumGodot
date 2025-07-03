@@ -2,9 +2,9 @@ namespace ArgentumOnline.Net.Commands;
 
 public class UpdateHpCommand : ICommand
 {
-    public int Health { get; set; }
+    public int MinHp { get; set; }
     public void Unpack(Reader reader)
     {
-        Health = reader.ReadInteger();
+        MinHp = reader.ReadInteger();
     }
 }
