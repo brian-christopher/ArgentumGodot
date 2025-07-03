@@ -341,19 +341,38 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.ChangeBankSlot)]
     private void HandleChangeBankSlot(ChangeBankSlotCommand command)
     {
+        ItemData item = new();
+        item.Name = command.Name;
+        item.Index = command.Index;
+        item.Type = (ItemClass)command.Type;
+        item.Price = command.Price;
+        item.Icon = GameAssets.GetTextureFromGrhId(command.GrhIndex);
+
+        item.MaxHit = command.MaxHit;
+        item.MinHit = command.MinHit;
+
+        item.MinDef = command.MinDef;
+        item.MaxDef = command.MaxDef;
+
+        var itemStack = new ItemStack(
+            Quantity: command.Quantity,
+            Equipped: false,
+            Item: item);
         
+        _gameContext.BankInventory[command.Slot - 1] = itemStack;
     }
 
     [Handler(ServerPacketId.BankInit)]
     private void HandleBankInit(BankInitCommand command)
     {
-        
+        UIController.OpenBank();
+        UIController.UpdateBankGold(command.Gold);
     }
 
     [Handler(ServerPacketId.BankEnd)]
     private void HandleBankEnd()
     {
-        
+        UIController.CloseBank();
     }
 
     [Handler(ServerPacketId.BankOK)]
@@ -365,7 +384,7 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.UpdateBankGold)]
     private void HandleUpdateBankGold(UpdateBankGoldCommand command)
     {
-        
+        UIController.UpdateBankGold(command.Gold);
     }
 
     [Handler(ServerPacketId.UserIndexInServer)]

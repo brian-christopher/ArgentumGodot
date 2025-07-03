@@ -83,6 +83,33 @@ public static class ClientCommands
         client.Send(data);
     }
     
+    public static void SendBankDepositItem(this NetworkClient client, int slot, int quantity)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.BankDeposit)
+            .WriteByte((byte)slot)
+            .WriteInteger((short)quantity)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendBankExtractItem(this NetworkClient client, int slot, int quantity)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.BankExtractItem)
+            .WriteByte((byte)slot)
+            .WriteInteger((short)quantity)
+            .Build();
+        
+        client.Send(data);
+    }
+    
+    public static void SendBankEnd(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.BankEnd);
+    }
+    
     public static void SendWalk(this NetworkClient client, Heading heading)
     {
         byte[] data = new BinaryPacketWriter()

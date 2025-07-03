@@ -15,6 +15,7 @@ public partial class GameUIController : CanvasLayer
 {
     #region Exported Properties
     [Export] private PackedScene TradePanelDisplayScene { get; set; }
+    [Export] private PackedScene BankPanelDisplayScene { get; set; }
     
     [Export] private Camera2D MainCamera { get; set; }
     [Export] private RichTextLabel ConsoleOutput { get; set; }
@@ -142,6 +143,25 @@ public partial class GameUIController : CanvasLayer
         GameContext.Trading = false;
     }
     
+    public void OpenBank()
+    {
+        BankPanelDisplay tradePanelDisplay = BankPanelDisplayScene
+            .Instantiate<BankPanelDisplay>();
+
+        tradePanelDisplay.PlayerInventory = GameContext.PlayerInventory;
+        tradePanelDisplay.BankInventory = GameContext.BankInventory;
+        AddChild(tradePanelDisplay);
+
+        _currentPanelDisplay = tradePanelDisplay;
+        GameContext.Trading = true;
+    }
+
+    public void CloseBank()
+    {
+        _currentPanelDisplay?.QueueFree();
+        GameContext.Trading = false;
+    }
+    
     private static string FormatBBCode(string message, FontData font)
     {
         if(string.IsNullOrEmpty(message))
@@ -156,5 +176,10 @@ public partial class GameUIController : CanvasLayer
             bbcode = $"[b]{bbcode}[/b]";
         
         return bbcode;
+    }
+
+    public void UpdateBankGold(int gold)
+    {
+        
     }
 }
