@@ -77,23 +77,24 @@ public partial class GameUIController : CanvasLayer
             PickupItem();
         }
 
+        if (eventKey.IsActionPressed("toggle_safe_mode"))
+        {
+            NetworkClient.Instance.SendSafeMode();
+        }
+        
+        if (eventKey.IsActionPressed("toggle_resuscitation_safe"))
+        {
+            NetworkClient.Instance.SendResuscitationSafe();
+        }
+
         if (eventKey.IsActionPressed("equip_item"))
         {
-            EquipSelectedItem();
+            EquipSelectedItem(); 
         }
 
         if(eventKey.IsActionPressed("meditate"))
         {
-            if(!GameContext.PlayerStats.IsAlive)
-            {
-                WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);
-                return;
-            }
-
-            if(GameContext.PlayerStats.MinMp != GameContext.PlayerStats.MaxMp)
-            {
-                NetworkClient.Instance.SendMeditate();
-            }
+            Meditate();
         }
         
         if(eventKey.IsActionPressed("position_update"))
@@ -102,6 +103,20 @@ public partial class GameUIController : CanvasLayer
             {
                 NetworkClient.Instance.SendRequestPositionUpdate();
             }
+        }
+    }
+
+    private void Meditate()
+    {
+        if(!GameContext.PlayerStats.IsAlive)
+        {
+            WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);
+            return;
+        }
+
+        if(GameContext.PlayerStats.MinMp != GameContext.PlayerStats.MaxMp)
+        {
+            NetworkClient.Instance.SendMeditate();
         }
     }
 

@@ -72,6 +72,16 @@ public static class ClientCommands
         SendOnePacket(client, ClientPacketId.RequestPositionUpdate);
     }
 
+    public static void SendSafeMode(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.SafeToggle);
+    }
+
+    public static void SendResuscitationSafe(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.ResuscitationSafeToggle);
+    }
+
     public static void SendCommerceBuy(this NetworkClient client, int slot, int quantity)
     {
         byte[] data = new BinaryPacketWriter()
