@@ -104,6 +104,16 @@ public static class ClientCommands
         client.Send(data);
     }
 
+    public static void SendWork(this NetworkClient client, Skill skill)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.Work)
+            .WriteByte((byte)skill) 
+            .Build();
+        
+        client.Send(data);
+    }
+
     public static void SenUseItem(this NetworkClient client, int slot)
     {
         byte[] data = new BinaryPacketWriter()

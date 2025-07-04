@@ -93,6 +93,11 @@ public partial class GameUIController : CanvasLayer
             EquipSelectedItem(); 
         }
 
+        if (eventKey.IsActionPressed("steal"))
+        {
+            Steal();
+        }
+
         if(eventKey.IsActionPressed("meditate"))
         {
             Meditate();
@@ -110,6 +115,20 @@ public partial class GameUIController : CanvasLayer
                 NetworkClient.Instance.SendRequestPositionUpdate();
             }
         }
+    }
+
+    private void Steal()
+    {
+        if (!GameContext.PlayerStats.IsAlive)
+        {
+            WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);;
+            return;
+        }
+
+        if (!GameContext.Intervals.RequestSteal())
+            return;
+
+        NetworkClient.Instance.SendWork(Skill.Robar);
     }
 
     private void Meditate()
