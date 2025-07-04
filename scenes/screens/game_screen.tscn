@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c72vpe5xpnd1"]
+[gd_scene load_steps=8 format=3 uid="uid://c72vpe5xpnd1"]
 
 [ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
 [ext_resource type="Script" uid="uid://bdmaaxo3gc6is" path="res://src/Entities/MapContainer.cs" id="2_beu7v"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bsur8gku0cfak" path="res://scenes/ui/gameplay/inventory_container_display.tscn" id="4_5wjna"]
 [ext_resource type="PackedScene" uid="uid://4gwqpe8jhs4p" path="res://scenes/ui/gameplay/trade_panel_display.tscn" id="4_atdcb"]
 [ext_resource type="PackedScene" uid="uid://c63dp0mc5v2kx" path="res://scenes/ui/gameplay/bank_panel_display.tscn" id="5_riit4"]
+[ext_resource type="PackedScene" uid="uid://diwixhrlpuo3d" path="res://scenes/ui/gameplay/drop_item_dialog.tscn" id="6_wvjml"]
 
 [node name="GameScreen" type="Node" node_paths=PackedStringArray("MapContainer", "MainCamera", "UIController")]
 script = ExtResource("1_v3r1a")
@@ -22,6 +23,7 @@ script = ExtResource("2_beu7v")
 script = ExtResource("3_dtf0s")
 TradePanelDisplayScene = ExtResource("4_atdcb")
 BankPanelDisplayScene = ExtResource("5_riit4")
+DropItemDialogScene = ExtResource("6_wvjml")
 MainCamera = NodePath("../MainCamera")
 ConsoleOutput = NodePath("Console")
 InventoryContainer = NodePath("InventoryContainerDisplay")

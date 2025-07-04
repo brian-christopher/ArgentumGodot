@@ -103,6 +103,19 @@ public static class ClientCommands
         
         client.Send(data);
     }
+    
+    
+        
+    public static void SendDrop(this NetworkClient client, int slot, int quantity)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.Drop)
+            .WriteByte((byte)slot)
+            .WriteInteger((short)quantity) 
+            .Build();
+        
+        client.Send(data);
+    }
 
     public static void SendWork(this NetworkClient client, Skill skill)
     {

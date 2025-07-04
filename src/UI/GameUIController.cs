@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ArgentumOnline.Core;
@@ -27,6 +28,7 @@ public partial class GameUIController : CanvasLayer
     #region Exported Properties
     [Export] private PackedScene TradePanelDisplayScene { get; set; }
     [Export] private PackedScene BankPanelDisplayScene { get; set; }
+    [Export] private PackedScene DropItemDialogScene { get; set; }
     
     [Export] private Camera2D MainCamera { get; set; }
     [Export] private RichTextLabel ConsoleOutput { get; set; }
@@ -115,8 +117,32 @@ public partial class GameUIController : CanvasLayer
                 NetworkClient.Instance.SendRequestPositionUpdate();
             }
         }
+
+        if (eventKey.IsActionPressed("drop_object"))
+        {
+            DropObject();
+        }
     }
 
+    private void DropObject()
+    {
+        if (GameContext.Trading)
+            return;
+
+        if (!GameContext.PlayerStats.IsAlive)
+        {
+            WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_InfoBold]);
+            return;
+        }
+
+        if (InventoryContainer.SelectedSlot == Declares.InvalidSlot)
+        {
+            return;
+        }
+
+        ShowDropPanel(InventoryContainer.SelectedSlot + 1);
+    }
+    
     private void Steal()
     {
         if (!GameContext.PlayerStats.IsAlive)
@@ -295,7 +321,18 @@ public partial class GameUIController : CanvasLayer
     {
         
     }
-
+    
+    private void ShowDropPanel(int slot)
+    {
+        if (this.IsNodeInstanced<DropItemDialog>())
+            return;
+        
+        DropItemDialog dropItemDialog = DropItemDialogScene.Instantiate<DropItemDialog>();
+        dropItemDialog.SlotIndex = slot;
+        
+        AddChild(dropItemDialog);
+    }
+    
     public void WriteToConsole(string message, FontData font)
     {
         string bbcode = FormatBBCode(message, font);

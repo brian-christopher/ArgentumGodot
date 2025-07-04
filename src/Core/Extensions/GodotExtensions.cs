@@ -1,3 +1,4 @@
+using System.Linq;
 using ArgentumOnline.Core.Types;
 using Godot;
 
@@ -25,5 +26,12 @@ public static class GodotExtensions
     public static Vector2I ToVector2I(this Vector2 vector)
     {
         return new Vector2I((int)vector.X, (int)vector.Y);
+    }
+    
+    public static bool IsNodeInstanced<T>(this Node node) where T : Node
+    {
+        return node.GetChildren()
+            .OfType<T>()
+            .Any();
     }
 }
