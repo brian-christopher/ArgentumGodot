@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ArgentumOnline.Core;
 using ArgentumOnline.Core.AutoLoads;
@@ -96,6 +97,11 @@ public partial class GameUIController : CanvasLayer
         {
             Meditate();
         }
+
+        if (eventKey.IsActionPressed("take_screenshot"))
+        {
+            TakeScreenshot();
+        }
         
         if(eventKey.IsActionPressed("position_update"))
         {
@@ -117,6 +123,39 @@ public partial class GameUIController : CanvasLayer
         if(GameContext.PlayerStats.MinMp != GameContext.PlayerStats.MaxMp)
         {
             NetworkClient.Instance.SendMeditate();
+        }
+    }
+
+    private void TakeScreenshot()
+    {
+        try
+        {
+            Viewport viewport = GetViewport();
+            Image image = viewport.GetTexture().GetImage();
+            
+            string now = DateTime.Now.Ticks.ToString();
+
+            string path = $"user://screenshots/{now}.png";
+            
+            string absolutePath = ProjectSettings.GlobalizePath(path);
+
+            var metaData = new
+            {
+                type = "screenshot",
+                path = absolutePath,
+            };
+
+            string meta = JsonSerializer.Serialize(metaData);
+
+            if (image.SavePng(path) == Error.Ok)
+            {
+                WriteToConsole($"[url={meta}]¡Screen Capturada![/url]",
+                    new FontData(Color: Colors.White, false, false));
+            }
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr($"TakeScreenshot: {e.Message}");
         }
     }
 
