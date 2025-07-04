@@ -57,9 +57,19 @@ public static class ClientCommands
         SendOnePacket(client, ClientPacketId.ThrowDices);
     }
 
+    public static void SendMeditate(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.Meditate);
+    }
+
     public static void SendCommerceEnd(this NetworkClient client)
     {
         SendOnePacket(client, ClientPacketId.CommerceEnd);
+    }
+
+    public static void SendRequestPositionUpdate(this NetworkClient client)
+    {
+        SendOnePacket(client, ClientPacketId.RequestPositionUpdate);
     }
 
     public static void SendCommerceBuy(this NetworkClient client, int slot, int quantity)

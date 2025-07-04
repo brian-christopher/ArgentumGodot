@@ -11,6 +11,16 @@ using Godot;
 
 namespace ArgentumOnline.UI;
 
+/// <summary>
+/// Manages the user interface for the game, including inventory interactions, trade and bank panels,  console output,
+/// and handling player input events.
+/// </summary>
+/// <remarks>This class provides functionality for managing various aspects of the game's user interface, such as 
+/// displaying inventory, handling input events, and managing trade and bank interactions. It integrates  with the
+/// game's context to ensure proper synchronization of player actions and game state.  The class is designed to handle
+/// input events like mouse clicks and key presses, and it provides methods  for opening and closing trade and bank
+/// panels, writing messages to the console, and interacting with  inventory items.  Note that this class assumes the
+/// presence of a valid <see cref="GameContext"/> instance to function  correctly.</remarks>
 public partial class GameUIController : CanvasLayer
 {
     #region Exported Properties
@@ -64,13 +74,45 @@ public partial class GameUIController : CanvasLayer
 
         if (eventKey.IsActionPressed("pickup"))
         {
-            NetworkClient.Instance.SendPickup();
+            PickupItem();
         }
 
         if (eventKey.IsActionPressed("equip_item"))
         {
             EquipSelectedItem();
         }
+
+        if(eventKey.IsActionPressed("meditate"))
+        {
+            if(!GameContext.PlayerStats.IsAlive)
+            {
+                WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);
+                return;
+            }
+
+            if(GameContext.PlayerStats.MinMp != GameContext.PlayerStats.MaxMp)
+            {
+                NetworkClient.Instance.SendMeditate();
+            }
+        }
+        
+        if(eventKey.IsActionPressed("position_update"))
+        {
+            if(GameContext.Intervals.RequestPositionUpdate())
+            {
+                NetworkClient.Instance.SendRequestPositionUpdate();
+            }
+        }
+    }
+
+    private void PickupItem()
+    {
+        if (!GameContext.PlayerStats.IsAlive)
+        {
+            WriteToConsole("¡¡Estás muerto!!", GameAssets.FontDataList[(int)FontTypeNames.FontType_Info]);
+            return;
+        }
+        NetworkClient.Instance.SendPickup();
     }
 
     private void EquipSelectedItem()

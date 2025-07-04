@@ -661,6 +661,9 @@ public partial class GameScreen : Node
     {
         _gameContext.PlayerStats.MinHp = command.MinHp;
         _gameContext.PlayerStats.MaxHp = command.MaxHp;
+        
+        _gameContext.PlayerStats.MinMp = command.MinMana;
+        _gameContext.PlayerStats.MaxMp = command.MaxMana;
     }
 
     [Handler(ServerPacketId.UpdateHungerAndThirst)]
@@ -673,6 +676,12 @@ public partial class GameScreen : Node
     private void HandleUpdateHp(UpdateHpCommand command)
     {
         _gameContext.PlayerStats.MinHp = command.MinHp;
+    }
+
+    [Handler(ServerPacketId.UpdateMana)]
+    private void HandleUpdateMp(UpdateManaCommand command)
+    {
+        _gameContext.PlayerStats.MinMp = command.MinMP;
     }
 
     [Handler(ServerPacketId.ChatOverHead)]
