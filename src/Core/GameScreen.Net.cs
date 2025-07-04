@@ -423,6 +423,12 @@ public partial class GameScreen : Node
         MapContainer.AddObject(command.GrhIndex, command.X, command.Y);
     }
 
+    [Handler(ServerPacketId.ObjectDelete)]
+    private void HandleObjectDelete(ObjectDeleteCommand command)
+    {
+        MapContainer.RemoveObject(command.X, command.Y);;
+    }
+
     [Handler(ServerPacketId.ErrorMsg)]
     private void HandleErrorMessage(ErrorMessageCommand command)
     {
