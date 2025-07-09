@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcilnbw3igghc"]
+
+[ext_resource type="Script" uid="uid://drbbbumlc433a" path="res://src/UI/Gameplay/SpellListView.cs" id="1_qyucc"]
+
+[node name="SpellListView" type="PanelContainer" node_paths=PackedStringArray("SpellItemList")]
+offset_right = 241.0
+offset_bottom = 282.0
+script = ExtResource("1_qyucc")
+SpellItemList = NodePath("MarginContainer/VBoxContainer/ItemList")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CastButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Lanzar"
+
+[node name="SpellDetailsButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "❓"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollUpButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "🔼"
+
+[node name="ScrollDownButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "🔽"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CastButton" to="." method="OnCastButtonPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SpellDetailsButton" to="." method="OnSpellDetailsButtonPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollUpButton" to="." method="OnScrollUpButtonPressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ScrollDownButton" to="." method="OnScrollDownButtonPressed"]

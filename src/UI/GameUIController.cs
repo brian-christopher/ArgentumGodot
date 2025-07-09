@@ -33,6 +33,7 @@ public partial class GameUIController : CanvasLayer
     [Export] private Camera2D MainCamera { get; set; }
     [Export] private RichTextLabel ConsoleOutput { get; set; }
     [Export] private InventoryContainerDisplay InventoryContainer { get; set; }
+    [Export] private SpellListView SpellList { get; set; }
     #endregion
 
     private Node _currentPanelDisplay;
@@ -413,5 +414,10 @@ public partial class GameUIController : CanvasLayer
     public void UpdateGold(int gold)
     {
         
+    }
+
+    public void UpdateSpellLabel(int index, string name)
+    {
+        SpellList.SetSpellLabel(index, name);
     }
 }

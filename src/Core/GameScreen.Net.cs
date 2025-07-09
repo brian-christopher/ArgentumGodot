@@ -317,7 +317,7 @@ public partial class GameScreen : Node
     [Handler(ServerPacketId.ChangeSpellSlot)]
     private void HandleChangeSpellSlot(ChangeSpellSlotCommand command)
     {
-        
+        UIController.UpdateSpellLabel(command.Slot - 1, command.Name);  
     }
 
     [Handler(ServerPacketId.TradeOK)]

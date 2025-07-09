@@ -146,11 +146,41 @@ public static class ClientCommands
         
         client.Send(data);   
     }
-
-
+    
     public static void SendAttack(this NetworkClient client)
     {
         SendOnePacket(client, ClientPacketId.Attack);
+    }
+    
+    public static void SendCastSpell(this NetworkClient client, int slot)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.CastSpell)
+            .WriteByte((byte)slot)
+            .Build();
+        
+        client.Send(data);   
+    }
+    
+    public static void SendSpellInfo(this NetworkClient client, int slot)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.SpellInfo)
+            .WriteByte((byte)slot)
+            .Build();
+        
+        client.Send(data);   
+    }
+    
+    public static void SendMoveSpell(this NetworkClient client, bool upwards, int slot)
+    {
+        byte[] data = new BinaryPacketWriter()
+            .WriteByte(ClientPacketId.MoveSpell)
+            .WriteBoolean(upwards)
+            .WriteByte((byte)slot)
+            .Build();
+        
+        client.Send(data);   
     }
     
     public static void SendPickup(this NetworkClient client)

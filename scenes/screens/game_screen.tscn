@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c72vpe5xpnd1"]
+[gd_scene load_steps=9 format=3 uid="uid://c72vpe5xpnd1"]
 
 [ext_resource type="Script" uid="uid://csn4ae5wiradx" path="res://src/Core/GameScreen.cs" id="1_v3r1a"]
 [ext_resource type="Script" uid="uid://bdmaaxo3gc6is" path="res://src/Entities/MapContainer.cs" id="2_beu7v"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://4gwqpe8jhs4p" path="res://scenes/ui/gameplay/trade_panel_display.tscn" id="4_atdcb"]
 [ext_resource type="PackedScene" uid="uid://c63dp0mc5v2kx" path="res://scenes/ui/gameplay/bank_panel_display.tscn" id="5_riit4"]
 [ext_resource type="PackedScene" uid="uid://diwixhrlpuo3d" path="res://scenes/ui/gameplay/drop_item_dialog.tscn" id="6_wvjml"]
+[ext_resource type="PackedScene" uid="uid://dcilnbw3igghc" path="res://scenes/ui/gameplay/spell_list_view.tscn" id="8_xi1he"]
 
 [node name="GameScreen" type="Node" node_paths=PackedStringArray("MapContainer", "MainCamera", "UIController")]
 script = ExtResource("1_v3r1a")
@@ -19,7 +20,7 @@ script = ExtResource("2_beu7v")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 
-[node name="GameUIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("MainCamera", "ConsoleOutput", "InventoryContainer")]
+[node name="GameUIController" type="CanvasLayer" parent="." node_paths=PackedStringArray("MainCamera", "ConsoleOutput", "InventoryContainer", "SpellList")]
 script = ExtResource("3_dtf0s")
 TradePanelDisplayScene = ExtResource("4_atdcb")
 BankPanelDisplayScene = ExtResource("5_riit4")
@@ -27,6 +28,7 @@ DropItemDialogScene = ExtResource("6_wvjml")
 MainCamera = NodePath("../MainCamera")
 ConsoleOutput = NodePath("Console")
 InventoryContainer = NodePath("InventoryContainerDisplay")
+SpellList = NodePath("SpellListView")
 
 [node name="Console" type="RichTextLabel" parent="GameUIController"]
 offset_left = 23.0
@@ -51,3 +53,16 @@ offset_bottom = 80.0
 grow_horizontal = 0
 grow_vertical = 2
 columns = 5
+
+[node name="SpellListView" parent="GameUIController" instance=ExtResource("8_xi1he")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -305.0
+offset_top = 40.0
+offset_right = -64.0
+offset_bottom = 322.0
+grow_horizontal = 0
+grow_vertical = 2
