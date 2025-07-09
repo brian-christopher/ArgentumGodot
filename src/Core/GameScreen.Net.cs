@@ -381,6 +381,12 @@ public partial class GameScreen : Node
         
     }
 
+    [Handler(ServerPacketId.MeditateToggle)]
+    private void HandleMeditateToggle()
+    {
+        _gameContext.UserMeditating = !_gameContext.UserMeditating;
+    }
+
     [Handler(ServerPacketId.UpdateBankGold)]
     private void HandleUpdateBankGold(UpdateBankGoldCommand command)
     {
