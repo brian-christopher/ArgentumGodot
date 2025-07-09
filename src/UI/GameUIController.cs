@@ -409,4 +409,9 @@ public partial class GameUIController : CanvasLayer
     {
         
     }
+
+    public void UpdateGold(int gold)
+    {
+        
+    }
 }

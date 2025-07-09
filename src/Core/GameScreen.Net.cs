@@ -387,6 +387,12 @@ public partial class GameScreen : Node
         UIController.UpdateBankGold(command.Gold);
     }
 
+    [Handler(ServerPacketId.UpdateGold)]
+    private void HandleUpdateGold(UpdateGoldCommand command)
+    {
+        UIController.UpdateGold(command.Gold);  
+    }
+
     [Handler(ServerPacketId.UserIndexInServer)]
     private void HandleUserIndexInServer(UserIndexInServerCommand command)
     {
