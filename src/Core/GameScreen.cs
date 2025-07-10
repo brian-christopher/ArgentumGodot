@@ -94,7 +94,7 @@ public partial class GameScreen : Node
 
         Vector2I gridPosition = character.GridPosition + heading.ToVector2I();
         
-        if (CanMoveTo(gridPosition.X, gridPosition.Y))
+        if (CanMoveTo(gridPosition.X, gridPosition.Y) && !_gameContext.UserParalyzed)
         {
             NetworkClient.Instance.SendWalk(heading);
             

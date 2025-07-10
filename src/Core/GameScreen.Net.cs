@@ -387,6 +387,12 @@ public partial class GameScreen : Node
         _gameContext.UserMeditating = !_gameContext.UserMeditating;
     }
 
+    [Handler(ServerPacketId.ParalizeOK)]
+    private void HandleParalizeOk()
+    {
+        _gameContext.UserParalyzed = !_gameContext.UserParalyzed;
+    }
+
     [Handler(ServerPacketId.UpdateBankGold)]
     private void HandleUpdateBankGold(UpdateBankGoldCommand command)
     {
